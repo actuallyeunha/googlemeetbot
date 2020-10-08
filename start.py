@@ -7,17 +7,16 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.ui import WebDriverWait as wait
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 import subprocess
 import time
 from time import sleep
 from time import perf_counter
 import pause
-import pynput
 import os
-from pynput.keyboard import Key, Controller
 
 
 def clear():
@@ -35,7 +34,6 @@ def title():
     print(Fore.CYAN + "█▀▄▀█ █▀▀ █▀▀ ▀▀█▀▀  █▀▀▄ █▀▀█ ▀▀█▀▀")
     print(Fore.CYAN + "█░▀░█ █▀▀ █▀▀ ░░█░░  █▀▀▄ █░░█ ░░█░░")
     print(Fore.CYAN + "▀░░░▀ ▀▀▀ ▀▀▀ ░░▀░░  ▀▀▀░ ▀▀▀▀ ░░▀░░")
-    print(Style.RESET_ALL + "")
 
 
 def menu():
@@ -70,16 +68,22 @@ def menu():
 
 def firefox():
     print()
-    print(prefix + "Opening Firefox with custom settings...")
+    print(prefix + "Abrindo firefox...")
+    start = perf_counter()
     options = Options()
     options.add_argument("--disable-infobars")
     options.set_preference("permissions.default.microphone", 2)
     options.set_preference("permissions.default.camera", 2)
     browser = webdriver.Firefox(options=options)
     browser.set_window_size(1280, 720)
+    end = perf_counter()
+    time = end - start
 
     print()
-    print(prefix + "Logging in...")
+    print("Feito! <" + Fore.MAGENTA + Style.BRIGHT + "{:.3f}".format(time) + Fore.BLUE + Style.BRIGHT + "s>")
+
+    print()
+    print(prefix + "Entrando na conta...")
 
     start = perf_counter()
 
@@ -91,7 +95,7 @@ def firefox():
     username.send_keys(email)
     nextButton = browser.find_element_by_id('identifierNext')
     nextButton.click()
-    sleep(3)
+    sleep(2)
     password = browser.find_element_by_xpath("//input[@class='whsOnd zHQkBf']")
     password.send_keys(senha)
     signInButton = browser.find_element_by_id('passwordNext')
@@ -101,18 +105,38 @@ def firefox():
     time = end - start
 
     print()
-    print("Done! <" + Fore.MAGENTA + Style.BRIGHT + "{:.3f}".format(time) + Fore.BLUE + Style.BRIGHT + "s>")
+    print("Feito! <" + Fore.MAGENTA + Style.BRIGHT + "{:.3f}".format(time) + Fore.BLUE + Style.BRIGHT + "s>")
     print()
 
-    print(prefix + "Por favor, insira a Url do Meet")
+    print(prefix + "Por favor, insira a Url do Meet. (ex meet.google.com/xxx-xxxx-xxx)")
     urlmeet = input("> ")
 
     print()
     print(prefix + "Entrando no meet...")
+    start = perf_counter()
     browser.get("https://" + urlmeet)
     sleep(3)
+    print()
+    print(prefix + "Pedindo pra entrar...")
     browser.find_element_by_xpath("//span[@class='l4V7wb Fxmcue']").click()
-    sleep(1)
+    end = perf_counter()
+    time = end - start
+
+    print()
+    print("Feito! <" + Fore.MAGENTA + Style.BRIGHT + "{:.3f}".format(time) + Fore.BLUE + Style.BRIGHT + "s>")
+
+    print(prefix + "Observando mensagens...")
+    print()
+    chamada = 1
+    while chamada == 1:
+        try:
+            elem = browser.find_element_by_xpath("[@class='oIy2qc', @data-message-text='lalala']")
+            print("funciono caraio")
+        except NoSuchElementException:  # spelling error making this code not work as expected
+            print("pass")
+            print()
+            pass
+
 
 
 def chrome():
@@ -151,7 +175,7 @@ def chrome():
     time = end - start
 
     print()
-    print("Done! <" + Fore.MAGENTA + Style.BRIGHT + "{:.3f}".format(time) + Fore.BLUE + Style.BRIGHT + "s>")
+    print("Feito! <" + Fore.MAGENTA + Style.BRIGHT + "{:.3f}".format(time) + Fore.BLUE + Style.BRIGHT + "s>")
 
 
 clear()
