@@ -3,9 +3,9 @@
 Um simples bot para google meet. Pode ser usado de varias maneiras.
 
 ## Requerimentos
-      $ pip3 install selenium
-      $ pip3 install colorama
-      $ pip3 install pyyaml
+      $ pip install selenium
+      $ pip install colorama
+      $ pip install pyyaml
       
 # Funcoes
 Nenhuma (que seja interessante), estou implementando pouco a pouco.
