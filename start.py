@@ -19,7 +19,6 @@ except ImportError:
 import time
 from time import sleep
 from time import perf_counter
-import pause
 import os
 
 
