@@ -10,7 +10,7 @@ Um simples bot para google meet. Pode ser usado de varias maneiras.
 # Funcoes
 Nenhuma (que seja interessante), estou implementando pouco a pouco.
 
-De momento o bot consegue reconhecer e responder mensagens.
+De momento o bot consegue reconhecer e responder mensagens, porem ele fica em loop respondendo todas as mensagens que estao aparecendo no chat.
 
 # To Do List:
 
